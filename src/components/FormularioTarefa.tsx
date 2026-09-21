@@ -16,7 +16,7 @@ interface Props {
 export function FormularioTarefa({ aberto, tarefaEditando, aoFechar, aoSalvar }: Props) {
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [materia, setMateria] = useState(MATERIAS[0]);
+  const [materia, setMateria] = useState<string>(MATERIAS[0] ?? "");
   const [prazo, setPrazo] = useState("");
   const [concluida, setConcluida] = useState(false);
 
