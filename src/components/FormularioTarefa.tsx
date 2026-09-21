@@ -25,7 +25,7 @@ export function FormularioTarefa({ aberto, tarefaEditando, aoFechar, aoSalvar }:
     if (aberto) {
       setTitulo(tarefaEditando?.titulo ?? "");
       setDescricao(tarefaEditando?.descricao ?? "");
-      setMateria(tarefaEditando?.materia ?? MATERIAS[0]);
+      setMateria(tarefaEditando?.materia ?? MATERIAS[0] ?? "");
       setPrazo(tarefaEditando?.prazo ?? "");
       setConcluida(tarefaEditando?.concluida ?? false);
     }
