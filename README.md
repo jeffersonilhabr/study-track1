@@ -1,29 +1,54 @@
-# Welcome to your Lovable project
+# StudyTrack 📚
 
-This project was built with [Lovable](https://lovable.dev).
+Sistema simples de organização e acompanhamento de estudos, criado como projeto de aprendizado de programação.
 
-## Build with Lovable
+## Objetivo
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Ajudar estudantes a visualizar suas matérias, organizar tarefas de estudo e acompanhar o próprio progresso — com um código simples, comentado e fácil de entender para quem está começando.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Funcionalidades atuais
 
-## Development
+- **Dashboard**: mensagem de boas-vindas, quantidade de matérias, tarefas pendentes, tarefas concluídas, percentual geral de progresso e lista das tarefas recentes.
+- **Cadastro de tarefas**: formulário com título, descrição, matéria, data de prazo e status (Pendente / Concluída).
+- **Lista de tarefas**: cada tarefa mostra título, matéria, prazo e status, com botões para concluir, editar e excluir.
+- **Matérias**: página com as matérias cadastradas e o progresso em cada uma.
+- **Filtros**: por status (Todas / Pendentes / Concluídas) e por matéria.
+- **Armazenamento**: as tarefas são salvas no `localStorage` do navegador — você pode fechar e abrir a página sem perder nada.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Tecnologias utilizadas
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+- **React** — construção da interface com componentes
+- **TypeScript** — JavaScript com tipos, para deixar o código mais seguro
+- **Tailwind CSS** — estilização moderna e responsiva
+- **TanStack Router** — navegação entre as páginas
+- **localStorage** — armazenamento local das tarefas (sem backend nesta versão)
+
+## Estrutura do projeto
+
+```
+StudyTrack/
+├── src/
+│   ├── components/        # Componentes reutilizáveis (Navbar, cards, formulário)
+│   ├── hooks/             # Lógica de estado (useTarefas)
+│   ├── lib/               # Dados e funções principais (studytrack.ts)
+│   ├── routes/            # Páginas (Dashboard, Tarefas, Matérias)
+│   └── styles.css         # Sistema de design (cores, fontes)
+├── public/
+└── README.md
 ```
 
-## Built with
+## Como o código está organizado
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+- `src/lib/studytrack.ts` — tipos de dados, lista de matérias e funções que leem/salvam no `localStorage`.
+- `src/hooks/use-tarefas.ts` — hook que gerencia a lista de tarefas (adicionar, editar, excluir, concluir).
+- `src/components/` — cada componente tem uma responsabilidade só: `Navbar` (navegação), `CartaoEstatistica` (números do dashboard), `CartaoTarefa` (uma tarefa), `FormularioTarefa` (criar/editar).
+- `src/routes/` — uma página por arquivo: `index.tsx` (Dashboard), `tarefas.tsx`, `materias.tsx`.
+
+## Próximas funcionalidades possíveis
+
+- Banco de dados e login de usuários (backend)
+- Cadastro e remoção de matérias
+- Ordenação de tarefas por prazo
+- Lembretes e notificações de prazos próximos
+- Modo escuro
+- Gráficos de progresso por semana
