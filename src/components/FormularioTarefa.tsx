@@ -4,7 +4,8 @@
  */
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { MATERIAS, type Tarefa } from "@/lib/studytrack";
+import { type Tarefa } from "@/lib/studytrack";
+import { useMaterias } from "@/hooks/use-materias";
 
 interface Props {
   aberto: boolean;
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function FormularioTarefa({ aberto, tarefaEditando, aoFechar, aoSalvar }: Props) {
+  const { materias } = useMaterias();
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [materia, setMateria] = useState<string>(MATERIAS[0] ?? "");
+  const [materia, setMateria] = useState<string>("");
   const [prazo, setPrazo] = useState("");
   const [concluida, setConcluida] = useState(false);
 
@@ -25,7 +27,7 @@ export function FormularioTarefa({ aberto, tarefaEditando, aoFechar, aoSalvar }:
     if (aberto) {
       setTitulo(tarefaEditando?.titulo ?? "");
       setDescricao(tarefaEditando?.descricao ?? "");
-      setMateria(tarefaEditando?.materia ?? MATERIAS[0] ?? "");
+      setMateria(tarefaEditando?.materia ?? materias[0] ?? "");
       setPrazo(tarefaEditando?.prazo ?? "");
       setConcluida(tarefaEditando?.concluida ?? false);
     }
