@@ -5,16 +5,16 @@
  * Aqui centralizamos: carregar, adicionar, editar, excluir e concluir tarefas.
  * Toda mudança é salva automaticamente no localStorage.
  */
-import { useState } from "react";
-import {
-  carregarTarefas,
-  salvarTarefas,
-  type Tarefa,
-} from "@/lib/studytrack";
+import { useEffect, useState } from "react";
+import { carregarTarefas, salvarTarefas, type Tarefa } from "@/lib/studytrack";
 
 export function useTarefas() {
-  // O estado começa com o que estiver salvo no navegador.
-  const [tarefas, setTarefas] = useState<Tarefa[]>(() => carregarTarefas());
+  const [tarefas, setTarefas] = useState<Tarefa[]>([]);
+
+  // O localStorage só existe no navegador, então lemos depois que a página abre.
+  useEffect(() => {
+    setTarefas(carregarTarefas());
+  }, []);
 
   // Função auxiliar: atualiza o estado E salva no navegador ao mesmo tempo.
   function atualizar(novasTarefas: Tarefa[]) {
