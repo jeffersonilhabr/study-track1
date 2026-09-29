@@ -14,7 +14,7 @@ import { useMaterias } from "@/hooks/use-materias";
 import { usePontos } from "@/hooks/use-pontos";
 import type { Tarefa } from "@/lib/studytrack";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "StudyTrack — Organize seus estudos" },

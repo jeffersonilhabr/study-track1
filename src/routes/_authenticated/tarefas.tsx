@@ -12,7 +12,7 @@ import { useTarefas } from "@/hooks/use-tarefas";
 import { useMaterias } from "@/hooks/use-materias";
 import type { Tarefa } from "@/lib/studytrack";
 
-export const Route = createFileRoute("/tarefas")({
+export const Route = createFileRoute("/_authenticated/tarefas")({
   head: () => ({
     meta: [
       { title: "Tarefas — StudyTrack" },

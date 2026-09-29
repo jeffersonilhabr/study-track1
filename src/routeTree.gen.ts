@@ -9,104 +9,109 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ExerciciosRouteImport } from './routes/exercicios'
-import { Route as MateriasRouteImport } from './routes/materias'
-import { Route as TarefasRouteImport } from './routes/tarefas'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedExerciciosRouteImport } from './routes/_authenticated/exercicios'
+import { Route as AuthenticatedMateriasRouteImport } from './routes/_authenticated/materias'
+import { Route as AuthenticatedTarefasRouteImport } from './routes/_authenticated/tarefas'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExerciciosRoute = ExerciciosRouteImport.update({
-  id: '/exercicios',
+const AuthenticatedExerciciosRoute = AuthenticatedExerciciosRouteImport.update({
+  id: '/_authenticated/exercicios',
   path: '/exercicios',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MateriasRoute = MateriasRouteImport.update({
-  id: '/materias',
+const AuthenticatedMateriasRoute = AuthenticatedMateriasRouteImport.update({
+  id: '/_authenticated/materias',
   path: '/materias',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TarefasRoute = TarefasRouteImport.update({
-  id: '/tarefas',
+const AuthenticatedTarefasRoute = AuthenticatedTarefasRouteImport.update({
+  id: '/_authenticated/tarefas',
   path: '/tarefas',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/exercicios': typeof AuthenticatedExerciciosRoute
+  '/materias': typeof AuthenticatedMateriasRoute
+  '/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/exercicios': typeof AuthenticatedExerciciosRoute
+  '/materias': typeof AuthenticatedMateriasRoute
+  '/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/exercicios': typeof AuthenticatedExerciciosRoute
+  '/_authenticated/materias': typeof AuthenticatedMateriasRoute
+  '/_authenticated/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exercicios' | '/materias' | '/tarefas'
+  fullPaths: '/dashboard' | '/exercicios' | '/materias' | '/tarefas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exercicios' | '/materias' | '/tarefas'
-  id: '__root__' | '/' | '/exercicios' | '/materias' | '/tarefas'
+  to: '/dashboard' | '/exercicios' | '/materias' | '/tarefas'
+  id:
+    | '__root__'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/exercicios'
+    | '/_authenticated/materias'
+    | '/_authenticated/tarefas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ExerciciosRoute: typeof ExerciciosRoute
-  MateriasRoute: typeof MateriasRoute
-  TarefasRoute: typeof TarefasRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedExerciciosRoute: typeof AuthenticatedExerciciosRoute
+  AuthenticatedMateriasRoute: typeof AuthenticatedMateriasRoute
+  AuthenticatedTarefasRoute: typeof AuthenticatedTarefasRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/exercicios': {
-      id: '/exercicios'
+    '/_authenticated/exercicios': {
+      id: '/_authenticated/exercicios'
       path: '/exercicios'
       fullPath: '/exercicios'
-      preLoaderRoute: typeof ExerciciosRouteImport
+      preLoaderRoute: typeof AuthenticatedExerciciosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/materias': {
-      id: '/materias'
+    '/_authenticated/materias': {
+      id: '/_authenticated/materias'
       path: '/materias'
       fullPath: '/materias'
-      preLoaderRoute: typeof MateriasRouteImport
+      preLoaderRoute: typeof AuthenticatedMateriasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tarefas': {
-      id: '/tarefas'
+    '/_authenticated/tarefas': {
+      id: '/_authenticated/tarefas'
       path: '/tarefas'
       fullPath: '/tarefas'
-      preLoaderRoute: typeof TarefasRouteImport
+      preLoaderRoute: typeof AuthenticatedTarefasRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ExerciciosRoute: ExerciciosRoute,
-  MateriasRoute: MateriasRoute,
-  TarefasRoute: TarefasRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedExerciciosRoute: AuthenticatedExerciciosRoute,
+  AuthenticatedMateriasRoute: AuthenticatedMateriasRoute,
+  AuthenticatedTarefasRoute: AuthenticatedTarefasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
