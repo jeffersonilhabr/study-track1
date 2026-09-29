@@ -3,14 +3,16 @@
  * Mostra as estatísticas gerais e a lista de tarefas recentes.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookCopy, CircleDashed, CheckCircle2, TrendingUp, Plus } from "lucide-react";
+import { BookCopy, CircleDashed, CheckCircle2, TrendingUp, Plus, Trophy } from "lucide-react";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { CartaoEstatistica } from "@/components/CartaoEstatistica";
 import { CartaoTarefa } from "@/components/CartaoTarefa";
 import { FormularioTarefa } from "@/components/FormularioTarefa";
 import { useTarefas } from "@/hooks/use-tarefas";
-import { MATERIAS, type Tarefa } from "@/lib/studytrack";
+import { useMaterias } from "@/hooks/use-materias";
+import { usePontos } from "@/hooks/use-pontos";
+import type { Tarefa } from "@/lib/studytrack";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,6 +30,8 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const { tarefas, adicionarTarefa, editarTarefa, excluirTarefa, alternarConcluida } = useTarefas();
+  const { materias } = useMaterias();
+  const { pontos } = usePontos();
   const [formAberto, setFormAberto] = useState(false);
   const [tarefaEditando, setTarefaEditando] = useState<Tarefa | null>(null);
 
@@ -55,11 +59,12 @@ function Dashboard() {
         </section>
 
         {/* Cards de estatísticas */}
-        <section className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          <CartaoEstatistica rotulo="matérias" valor={MATERIAS.length} icone={BookCopy} />
+        <section className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+          <CartaoEstatistica rotulo="matérias" valor={materias.length} icone={BookCopy} />
           <CartaoEstatistica rotulo="tarefas pendentes" valor={pendentes} icone={CircleDashed} />
           <CartaoEstatistica rotulo="tarefas concluídas" valor={concluidas} icone={CheckCircle2} />
           <CartaoEstatistica rotulo="concluído" valor={`${percentual}%`} icone={TrendingUp} />
+          <CartaoEstatistica rotulo="pontos" valor={pontos} icone={Trophy} />
         </section>
 
         {/* Barra de progresso geral */}

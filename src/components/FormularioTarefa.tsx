@@ -92,7 +92,7 @@ export function FormularioTarefa({ aberto, tarefaEditando, aoFechar, aoSalvar }:
                 value={materia}
                 onChange={(e) => setMateria(e.target.value)}
               >
-                {MATERIAS.map((m) => (
+                {materias.map((m) => (
                   <option key={m} value={m}>
                     {m}
                   </option>

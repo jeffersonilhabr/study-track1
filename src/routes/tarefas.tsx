@@ -9,7 +9,8 @@ import { Navbar } from "@/components/Navbar";
 import { CartaoTarefa } from "@/components/CartaoTarefa";
 import { FormularioTarefa } from "@/components/FormularioTarefa";
 import { useTarefas } from "@/hooks/use-tarefas";
-import { MATERIAS, type Tarefa } from "@/lib/studytrack";
+import { useMaterias } from "@/hooks/use-materias";
+import type { Tarefa } from "@/lib/studytrack";
 
 export const Route = createFileRoute("/tarefas")({
   head: () => ({
@@ -29,6 +30,7 @@ type FiltroStatus = "todas" | "pendentes" | "concluidas";
 
 function PaginaTarefas() {
   const { tarefas, adicionarTarefa, editarTarefa, excluirTarefa, alternarConcluida } = useTarefas();
+  const { materias } = useMaterias();
   const [formAberto, setFormAberto] = useState(false);
   const [tarefaEditando, setTarefaEditando] = useState<Tarefa | null>(null);
 
@@ -102,7 +104,7 @@ function PaginaTarefas() {
             className="ml-auto rounded-full border bg-card px-4 py-1.5 text-sm font-medium outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="todas">Todas as matérias</option>
-            {MATERIAS.map((m) => (
+            {materias.map((m) => (
               <option key={m} value={m}>
                 {m}
               </option>
