@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 import { useTarefas } from "@/hooks/use-tarefas";
 import { useMaterias } from "@/hooks/use-materias";
 
-export const Route = createFileRoute("/materias")({
+export const Route = createFileRoute("/_authenticated/materias")({
   head: () => ({
     meta: [
       { title: "Matérias — StudyTrack" },

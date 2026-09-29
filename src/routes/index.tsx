@@ -1,133 +1,97 @@
 /**
- * Dashboard — página inicial do StudyTrack.
- * Mostra as estatísticas gerais e a lista de tarefas recentes.
+ * Página inicial pública — apresenta o StudyTrack e convida a entrar.
+ * Quem já está logado vai direto para o Dashboard.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookCopy, CircleDashed, CheckCircle2, TrendingUp, Plus } from "lucide-react";
-import { useState } from "react";
-import { Navbar } from "@/components/Navbar";
-import { CartaoEstatistica } from "@/components/CartaoEstatistica";
-import { CartaoTarefa } from "@/components/CartaoTarefa";
-import { FormularioTarefa } from "@/components/FormularioTarefa";
-import { useTarefas } from "@/hooks/use-tarefas";
-import { MATERIAS, type Tarefa } from "@/lib/studytrack";
+import { BookOpenCheck, ListChecks, Trophy, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "StudyTrack — Organize seus estudos" },
-      { name: "description", content: "Dashboard do StudyTrack: acompanhe suas matérias e tarefas de estudo." },
+      {
+        name: "description",
+        content: "Organize matérias, tarefas de estudo e pratique com exercícios que valem pontos.",
+      },
       { property: "og:title", content: "StudyTrack — Organize seus estudos" },
-      { property: "og:description", content: "Acompanhe suas matérias e tarefas de estudo." },
+      {
+        property: "og:description",
+        content: "Organize matérias, tarefas de estudo e pratique com exercícios que valem pontos.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: Dashboard,
+  component: PaginaInicial,
 });
 
-function Dashboard() {
-  const { tarefas, adicionarTarefa, editarTarefa, excluirTarefa, alternarConcluida } = useTarefas();
-  const [formAberto, setFormAberto] = useState(false);
-  const [tarefaEditando, setTarefaEditando] = useState<Tarefa | null>(null);
+const recursos = [
+  {
+    icone: BookOpen,
+    titulo: "Suas matérias",
+    texto: "Cadastre o que você está estudando e acompanhe o progresso de cada uma.",
+  },
+  {
+    icone: ListChecks,
+    titulo: "Tarefas de estudo",
+    texto: "Crie tarefas com prazo e status, e marque como concluídas ao terminar.",
+  },
+  {
+    icone: Trophy,
+    titulo: "Exercícios com pontos",
+    texto: "Peça exercícios por matéria, responda e acumule pontos a cada acerto.",
+  },
+];
 
-  // Cálculos das estatísticas exibidas nos cards.
-  const pendentes = tarefas.filter((t) => !t.concluida).length;
-  const concluidas = tarefas.length - pendentes;
-  const percentual = tarefas.length === 0 ? 0 : Math.round((concluidas / tarefas.length) * 100);
-
-  function salvar(dados: Omit<Tarefa, "id">) {
-    if (tarefaEditando) editarTarefa(tarefaEditando.id, dados);
-    else adicionarTarefa(dados);
-  }
-
+function PaginaInicial() {
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <div className="flex min-h-screen flex-col">
+      <header className="border-b bg-card/80 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+          <span className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <BookOpenCheck className="size-5" />
+            </span>
+            <span className="font-display text-xl font-semibold">StudyTrack</span>
+          </span>
+          <Link
+            to="/auth"
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Entrar
+          </Link>
+        </div>
+      </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        {/* Saudação */}
-        <section className="fade-up">
-          <h1 className="text-3xl font-bold sm:text-4xl">Olá! 👋</h1>
-          <p className="mt-2 text-muted-foreground">
-            Organize seus estudos e acompanhe seu progresso.
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-16">
+        <section className="fade-up max-w-2xl">
+          <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
+            Organize seus estudos e ganhe pontos praticando
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground">
+            O StudyTrack ajuda você a acompanhar matérias e tarefas, e a praticar com
+            exercícios que valem pontos — tudo em um lugar simples.
           </p>
+          <Link
+            to="/auth"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Começar agora
+          </Link>
         </section>
 
-        {/* Cards de estatísticas */}
-        <section className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          <CartaoEstatistica rotulo="matérias" valor={MATERIAS.length} icone={BookCopy} />
-          <CartaoEstatistica rotulo="tarefas pendentes" valor={pendentes} icone={CircleDashed} />
-          <CartaoEstatistica rotulo="tarefas concluídas" valor={concluidas} icone={CheckCircle2} />
-          <CartaoEstatistica rotulo="concluído" valor={`${percentual}%`} icone={TrendingUp} />
-        </section>
-
-        {/* Barra de progresso geral */}
-        <section className="fade-up mt-6 rounded-xl border bg-card p-4 shadow-sm">
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="font-medium">Progresso geral</span>
-            <span className="text-muted-foreground">{percentual}% concluído</span>
-          </div>
-          <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-            <div className="progress-fill h-full rounded-full bg-primary" style={{ width: `${percentual}%` }} />
-          </div>
-        </section>
-
-        {/* Lista de tarefas */}
-        <section className="mt-8">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Tarefas de estudo</h2>
-            <button
-              onClick={() => {
-                setTarefaEditando(null);
-                setFormAberto(true);
-              }}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              <Plus className="size-4" />
-              Nova tarefa
-            </button>
-          </div>
-
-          {tarefas.length === 0 ? (
-            <p className="rounded-xl border border-dashed bg-card p-8 text-center text-muted-foreground">
-              Nenhuma tarefa ainda. Clique em "+ Nova tarefa" para começar!
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {/* Mostramos apenas as 5 mais recentes; a lista completa fica em /tarefas */}
-              {tarefas.slice(-5).reverse().map((tarefa) => (
-                <CartaoTarefa
-                  key={tarefa.id}
-                  tarefa={tarefa}
-                  aoAlternar={alternarConcluida}
-                  aoEditar={(t) => {
-                    setTarefaEditando(t);
-                    setFormAberto(true);
-                  }}
-                  aoExcluir={excluirTarefa}
-                />
-              ))}
+        <section className="mt-16 grid gap-4 sm:grid-cols-3">
+          {recursos.map((recurso) => (
+            <div key={recurso.titulo} className="fade-up rounded-xl border bg-card p-5 shadow-sm">
+              <span className="flex size-10 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                <recurso.icone className="size-5" />
+              </span>
+              <h2 className="mt-3 text-lg font-semibold">{recurso.titulo}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{recurso.texto}</p>
             </div>
-          )}
-
-          {tarefas.length > 5 && (
-            <Link
-              to="/tarefas"
-              className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
-            >
-              Ver todas as tarefas →
-            </Link>
-          )}
+          ))}
         </section>
       </main>
-
-      <FormularioTarefa
-        aberto={formAberto}
-        tarefaEditando={tarefaEditando}
-        aoFechar={() => setFormAberto(false)}
-        aoSalvar={salvar}
-      />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { useMaterias } from "@/hooks/use-materias";
 import { usePontos } from "@/hooks/use-pontos";
 import { embaralhar, exerciciosDaMateria, type Exercicio } from "@/lib/exercicios";
 
-export const Route = createFileRoute("/exercicios")({
+export const Route = createFileRoute("/_authenticated/exercicios")({
   head: () => ({
     meta: [
       { title: "Exercícios — StudyTrack" },

@@ -10,63 +10,95 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ExerciciosRouteImport } from './routes/exercicios'
-import { Route as MateriasRouteImport } from './routes/materias'
-import { Route as TarefasRouteImport } from './routes/tarefas'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedExerciciosRouteImport } from './routes/_authenticated/exercicios'
+import { Route as AuthenticatedMateriasRouteImport } from './routes/_authenticated/materias'
+import { Route as AuthenticatedTarefasRouteImport } from './routes/_authenticated/tarefas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExerciciosRoute = ExerciciosRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedExerciciosRoute = AuthenticatedExerciciosRouteImport.update({
   id: '/exercicios',
   path: '/exercicios',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const MateriasRoute = MateriasRouteImport.update({
+const AuthenticatedMateriasRoute = AuthenticatedMateriasRouteImport.update({
   id: '/materias',
   path: '/materias',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const TarefasRoute = TarefasRouteImport.update({
+const AuthenticatedTarefasRoute = AuthenticatedTarefasRouteImport.update({
   id: '/tarefas',
   path: '/tarefas',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/exercicios': typeof AuthenticatedExerciciosRoute
+  '/materias': typeof AuthenticatedMateriasRoute
+  '/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/exercicios': typeof AuthenticatedExerciciosRoute
+  '/materias': typeof AuthenticatedMateriasRoute
+  '/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/exercicios': typeof ExerciciosRoute
-  '/materias': typeof MateriasRoute
-  '/tarefas': typeof TarefasRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/exercicios': typeof AuthenticatedExerciciosRoute
+  '/_authenticated/materias': typeof AuthenticatedMateriasRoute
+  '/_authenticated/tarefas': typeof AuthenticatedTarefasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exercicios' | '/materias' | '/tarefas'
+  fullPaths:
+    '/' | '/auth' | '/dashboard' | '/exercicios' | '/materias' | '/tarefas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exercicios' | '/materias' | '/tarefas'
-  id: '__root__' | '/' | '/exercicios' | '/materias' | '/tarefas'
+  to: '/' | '/auth' | '/dashboard' | '/exercicios' | '/materias' | '/tarefas'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/exercicios'
+    | '/_authenticated/materias'
+    | '/_authenticated/tarefas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ExerciciosRoute: typeof ExerciciosRoute
-  MateriasRoute: typeof MateriasRoute
-  TarefasRoute: typeof TarefasRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,35 +110,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/exercicios': {
-      id: '/exercicios'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/exercicios': {
+      id: '/_authenticated/exercicios'
       path: '/exercicios'
       fullPath: '/exercicios'
-      preLoaderRoute: typeof ExerciciosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedExerciciosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/materias': {
-      id: '/materias'
+    '/_authenticated/materias': {
+      id: '/_authenticated/materias'
       path: '/materias'
       fullPath: '/materias'
-      preLoaderRoute: typeof MateriasRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMateriasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/tarefas': {
-      id: '/tarefas'
+    '/_authenticated/tarefas': {
+      id: '/_authenticated/tarefas'
       path: '/tarefas'
       fullPath: '/tarefas'
-      preLoaderRoute: typeof TarefasRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTarefasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedExerciciosRoute: typeof AuthenticatedExerciciosRoute
+  AuthenticatedMateriasRoute: typeof AuthenticatedMateriasRoute
+  AuthenticatedTarefasRoute: typeof AuthenticatedTarefasRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedExerciciosRoute: AuthenticatedExerciciosRoute,
+  AuthenticatedMateriasRoute: AuthenticatedMateriasRoute,
+  AuthenticatedTarefasRoute: AuthenticatedTarefasRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ExerciciosRoute: ExerciciosRoute,
-  MateriasRoute: MateriasRoute,
-  TarefasRoute: TarefasRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
