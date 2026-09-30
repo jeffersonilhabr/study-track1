@@ -11,6 +11,7 @@ const links = [
   { para: "/tarefas", rotulo: "Tarefas" },
   { para: "/materias", rotulo: "Matérias" },
   { para: "/exercicios", rotulo: "Exercícios" },
+  { para: "/assistente", rotulo: "Assistente" },
 ] as const;
 
 export function Navbar() {
