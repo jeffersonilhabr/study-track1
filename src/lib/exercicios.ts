@@ -133,6 +133,47 @@ const BANCO: Exercicio[] = [
     explicacao: "A chave primária identifica cada registro de forma única na tabela.",
     pontos: 10,
   },
+  {
+    id: "html-3",
+    materia: "HTML e CSS",
+    pergunta: "Qual tag usamos para o título principal de uma página?",
+    alternativas: ["<titulo>", "<h1>", "<topo>", "<p>"],
+    correta: 1,
+    explicacao: "<h1> é o título mais importante da página (os níveis vão de <h1> até <h6>).",
+    pontos: 10,
+  },
+  {
+    id: "html-4",
+    materia: "HTML e CSS",
+    pergunta: "Qual atributo da tag <img> define o caminho da imagem?",
+    alternativas: ["href", "link", "src", "path"],
+    correta: 2,
+    explicacao: "O atributo src (source) aponta para o arquivo da imagem, ex.: <img src=\"foto.png\">.",
+    pontos: 10,
+  },
+  {
+    id: "css-1",
+    materia: "HTML e CSS",
+    pergunta: "No box model do CSS, o que é o padding?",
+    alternativas: [
+      "O espaço interno entre a borda e o conteúdo",
+      "A margem entre elementos vizinhos",
+      "A cor de fundo do elemento",
+      "A espessura da borda",
+    ],
+    correta: 0,
+    explicacao: "Padding é o espaço interno do elemento; margin é o espaço externo entre elementos.",
+    pontos: 10,
+  },
+  {
+    id: "css-2",
+    materia: "HTML e CSS",
+    pergunta: 'Como selecionamos em CSS um elemento com id="menu"?',
+    alternativas: [".menu { }", "*menu { }", "#menu { }", "@menu { }"],
+    correta: 2,
+    explicacao: "O # seleciona por id; o ponto (.) seleciona por classe.",
+    pontos: 10,
+  },
 ];
 
 // Exercícios genéricos de estudo, usados para matérias que o usuário criou
