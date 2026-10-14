@@ -240,3 +240,30 @@ export function embaralhar<T>(lista: T[]): T[] {
   }
   return copia;
 }
+
+/**
+ * Retorna os exercícios sugeridos para o dia específico.
+ * Usa a data como semente para garantir rotação diária mesmo sem internet.
+ */
+export function obterExerciciosDoDia(materia: string, dataStr?: string): Exercicio[] {
+  const hoje = dataStr || new Date().toISOString().split("T")[0]!;
+  const todos = exerciciosDaMateria(materia);
+  if (todos.length <= 3) return todos;
+
+  // Gera uma semente numérica a partir da data (ex: "2026-10-13")
+  let semente = 0;
+  for (let i = 0; i < hoje.length; i++) {
+    semente = (semente * 31 + hoje.charCodeAt(i)) >>> 0;
+  }
+
+  // Embaralhamento determinístico usando a semente do dia
+  const copia = [...todos];
+  for (let i = copia.length - 1; i > 0; i--) {
+    semente = (semente * 1664525 + 1013904223) >>> 0;
+    const j = semente % (i + 1);
+    [copia[i], copia[j]] = [copia[j]!, copia[i]!];
+  }
+
+  return copia.slice(0, 3);
+}
+

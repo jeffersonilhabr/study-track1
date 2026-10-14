@@ -12,6 +12,7 @@ const links = [
   { para: "/materias", rotulo: "Matérias" },
   { para: "/exercicios", rotulo: "Exercícios" },
   { para: "/assistente", rotulo: "Assistente" },
+  { para: "/notificacoes", rotulo: "Notificações" },
 ] as const;
 
 export function Navbar() {

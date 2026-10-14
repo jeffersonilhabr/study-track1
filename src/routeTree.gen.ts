@@ -16,8 +16,10 @@ import { Route as AuthenticatedAssistenteRouteImport } from './routes/_authentic
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedExerciciosRouteImport } from './routes/_authenticated/exercicios'
 import { Route as AuthenticatedMateriasRouteImport } from './routes/_authenticated/materias'
+import { Route as AuthenticatedNotificacoesRouteImport } from './routes/_authenticated/notificacoes'
 import { Route as AuthenticatedTarefasRouteImport } from './routes/_authenticated/tarefas'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiExerciciosIaRouteImport } from './routes/api/exercicios-ia'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +55,12 @@ const AuthenticatedMateriasRoute = AuthenticatedMateriasRouteImport.update({
   path: '/materias',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotificacoesRoute =
+  AuthenticatedNotificacoesRouteImport.update({
+    id: '/notificacoes',
+    path: '/notificacoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTarefasRoute = AuthenticatedTarefasRouteImport.update({
   id: '/tarefas',
   path: '/tarefas',
@@ -63,6 +71,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExerciciosIaRoute = ApiExerciciosIaRouteImport.update({
+  id: '/api/exercicios-ia',
+  path: '/api/exercicios-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,8 +84,10 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/exercicios': typeof AuthenticatedExerciciosRoute
   '/materias': typeof AuthenticatedMateriasRoute
+  '/notificacoes': typeof AuthenticatedNotificacoesRoute
   '/tarefas': typeof AuthenticatedTarefasRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/exercicios-ia': typeof ApiExerciciosIaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -81,8 +96,10 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/exercicios': typeof AuthenticatedExerciciosRoute
   '/materias': typeof AuthenticatedMateriasRoute
+  '/notificacoes': typeof AuthenticatedNotificacoesRoute
   '/tarefas': typeof AuthenticatedTarefasRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/exercicios-ia': typeof ApiExerciciosIaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,8 +110,10 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/exercicios': typeof AuthenticatedExerciciosRoute
   '/_authenticated/materias': typeof AuthenticatedMateriasRoute
+  '/_authenticated/notificacoes': typeof AuthenticatedNotificacoesRoute
   '/_authenticated/tarefas': typeof AuthenticatedTarefasRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/exercicios-ia': typeof ApiExerciciosIaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,8 +124,10 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/exercicios'
     | '/materias'
+    | '/notificacoes'
     | '/tarefas'
     | '/api/chat'
+    | '/api/exercicios-ia'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -115,8 +136,10 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/exercicios'
     | '/materias'
+    | '/notificacoes'
     | '/tarefas'
     | '/api/chat'
+    | '/api/exercicios-ia'
   id:
     | '__root__'
     | '/'
@@ -126,8 +149,10 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/exercicios'
     | '/_authenticated/materias'
+    | '/_authenticated/notificacoes'
     | '/_authenticated/tarefas'
     | '/api/chat'
+    | '/api/exercicios-ia'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +160,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiExerciciosIaRoute: typeof ApiExerciciosIaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -188,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMateriasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notificacoes': {
+      id: '/_authenticated/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/notificacoes'
+      preLoaderRoute: typeof AuthenticatedNotificacoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tarefas': {
       id: '/_authenticated/tarefas'
       path: '/tarefas'
@@ -202,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/exercicios-ia': {
+      id: '/api/exercicios-ia'
+      path: '/api/exercicios-ia'
+      fullPath: '/api/exercicios-ia'
+      preLoaderRoute: typeof ApiExerciciosIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -210,6 +250,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedExerciciosRoute: typeof AuthenticatedExerciciosRoute
   AuthenticatedMateriasRoute: typeof AuthenticatedMateriasRoute
+  AuthenticatedNotificacoesRoute: typeof AuthenticatedNotificacoesRoute
   AuthenticatedTarefasRoute: typeof AuthenticatedTarefasRoute
 }
 
@@ -218,6 +259,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedExerciciosRoute: AuthenticatedExerciciosRoute,
   AuthenticatedMateriasRoute: AuthenticatedMateriasRoute,
+  AuthenticatedNotificacoesRoute: AuthenticatedNotificacoesRoute,
   AuthenticatedTarefasRoute: AuthenticatedTarefasRoute,
 }
 
@@ -229,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiExerciciosIaRoute: ApiExerciciosIaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

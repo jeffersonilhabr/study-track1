@@ -3,7 +3,7 @@
  * Mostra as estatísticas gerais e a lista de tarefas recentes.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookCopy, CircleDashed, CheckCircle2, TrendingUp, Plus, Trophy } from "lucide-react";
+import { BookCopy, CircleDashed, CheckCircle2, TrendingUp, Plus, Trophy, Flame, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { CartaoEstatistica } from "@/components/CartaoEstatistica";
@@ -12,6 +12,7 @@ import { FormularioTarefa } from "@/components/FormularioTarefa";
 import { useTarefas } from "@/hooks/use-tarefas";
 import { useMaterias } from "@/hooks/use-materias";
 import { usePontos } from "@/hooks/use-pontos";
+import { useDesafioDiario } from "@/hooks/use-desafio-diario";
 import type { Tarefa } from "@/lib/studytrack";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
@@ -32,6 +33,7 @@ function Dashboard() {
   const { tarefas, adicionarTarefa, editarTarefa, excluirTarefa, alternarConcluida } = useTarefas();
   const { materias } = useMaterias();
   const { pontos } = usePontos();
+  const { streak, concluidoHoje } = useDesafioDiario();
   const [formAberto, setFormAberto] = useState(false);
   const [tarefaEditando, setTarefaEditando] = useState<Tarefa | null>(null);
 
@@ -56,6 +58,35 @@ function Dashboard() {
           <p className="mt-2 text-muted-foreground">
             Organize seus estudos e acompanhe seu progresso.
           </p>
+        </section>
+
+        {/* Banner do Desafio Diário com IA */}
+        <section className="fade-up mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-xl border bg-gradient-to-r from-primary/10 via-card to-card p-4 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              <Flame className="size-5 fill-amber-500 text-amber-500" />
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold">Desafio Diário com IA</span>
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                  {streak} {streak === 1 ? "dia seguido" : "dias seguidos"} 🔥
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {concluidoHoje
+                  ? "Parabéns! Você já concluiu o desafio de hoje e garantiu seus pontos bônus."
+                  : "Resolva as questões sugeridas de hoje para ganhar bônus e manter o ritmo!"}
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/exercicios"
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            <Sparkles className="size-4" />
+            {concluidoHoje ? "Praticar mais" : "Começar Desafio"}
+          </Link>
         </section>
 
         {/* Cards de estatísticas */}
